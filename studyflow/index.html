@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="StudyFlow: organize seus estudos, acompanhe suas metas e mantenha o foco.">
+  <title>StudyFlow — Seu espaço de evolução</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#inicio">
+        <span class="brand-icon">S</span>
+        <span>study<span class="brand-accent">flow</span><small>STUDENT WORKSPACE</small></span>
+      </a>
+
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <a href="#inicio" class="nav-link active"><span>◫</span> Visão geral</a>
+        <a href="#tarefas" class="nav-link"><span>☷</span> Minhas tarefas <span class="nav-count" id="nav-task-count">0</span></a>
+        <a href="#materias" class="nav-link"><span>▤</span> Matérias</a>
+        <a href="#foco" class="nav-link"><span>◷</span> Modo foco</a>
+      </nav>
+
+      <div class="sidebar-label">ORGANIZAÇÃO</div>
+      <div class="side-note">
+        <span class="note-icon">✦</span>
+        <div>
+          <strong>Um passo de cada vez.</strong>
+          <p>Pequenas sessões também constroem grandes resultados.</p>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="profile-avatar">SF</div>
+        <div class="profile-text"><strong>Meu espaço</strong><small>Plano pessoal de estudos</small></div>
+        <span class="profile-dot"></span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="inicio">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Abrir menu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong>Visão geral</strong></div>
+        <div class="topbar-right">
+          <span class="today-label" id="today-label"></span>
+          <button class="avatar-small" title="Meu espaço">S</button>
+        </div>
+      </header>
+
+      <section class="welcome">
+        <div>
+          <div class="welcome-kicker"><span class="live-dot"></span> SEU ESPAÇO DE EVOLUÇÃO</div>
+          <h1>Vamos fazer acontecer<span>.</span></h1>
+          <p>Organize suas prioridades, mantenha o foco e avance no seu ritmo.</p>
+        </div>
+        <button class="button button-primary" id="new-task-top"><span>＋</span> Nova tarefa</button>
+      </section>
+
+      <section class="stats-grid" aria-label="Estatísticas de estudos">
+        <article class="stat-card">
+          <div class="stat-top"><span>Tarefas pendentes</span><span class="stat-icon purple">☷</span></div>
+          <div class="stat-number" id="pending-stat">0</div>
+          <div class="stat-foot">Itens para concluir</div>
+          <div class="stat-line"><span style="width:65%;background:#a895ff"></span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Concluídas</span><span class="stat-icon green">✓</span></div>
+          <div class="stat-number" id="completed-stat">0</div>
+          <div class="stat-foot">Tarefas finalizadas</div>
+          <div class="stat-line"><span id="completed-line" style="width:0%;background:#82dfb0"></span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Tempo de foco</span><span class="stat-icon blue">◷</span></div>
+          <div class="stat-number" id="focus-stat">0 <small>min</small></div>
+          <div class="stat-foot">Sessões concluídas</div>
+          <div class="stat-line"><span style="width:48%;background:#82b9ff"></span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Matérias</span><span class="stat-icon orange">▤</span></div>
+          <div class="stat-number" id="subjects-stat">0</div>
+          <div class="stat-foot">Em sua rotina</div>
+          <div class="stat-line"><span style="width:75%;background:#ffbd83"></span></div>
+        </article>
+      </section>
+
+      <div class="content-grid">
+        <section class="panel tasks-panel" id="tarefas">
+          <div class="panel-heading">
+            <div><span class="section-overline">PLANEJAMENTO</span><h2>Suas tarefas</h2></div>
+            <button class="text-button" id="new-task-inline">＋ Adicionar</button>
+          </div>
+          <div class="task-toolbar">
+            <div class="task-tabs" id="task-tabs">
+              <button class="task-tab active" data-filter="todas">Todas</button>
+              <button class="task-tab" data-filter="pendentes">Pendentes</button>
+              <button class="task-tab" data-filter="concluidas">Concluídas</button>
+            </div>
+            <label class="mini-search"><span>⌕</span><input id="task-search" type="search" placeholder="Buscar..." aria-label="Buscar tarefas"></label>
+          </div>
+          <div class="task-list" id="task-list"></div>
+          <div class="task-empty" id="task-empty" hidden>
+            <span>✦</span><strong>Nada por aqui ainda.</strong><p>Adicione uma tarefa e comece a organizar sua rotina.</p>
+          </div>
+          <div class="panel-bottom"><span id="task-summary">0 tarefas</span><button class="text-button" id="clear-completed">Limpar concluídas</button></div>
+        </section>
+
+        <section class="panel focus-panel" id="foco">
+          <div class="panel-heading">
+            <div><span class="section-overline">PRODUTIVIDADE</span><h2>Modo foco</h2></div>
+            <span class="focus-badge">POMODORO</span>
+          </div>
+          <p class="focus-description">Uma tarefa por vez. Seu progresso começa agora.</p>
+          <div class="timer-mode">
+            <button class="timer-tab active" data-minutes="25">Foco</button>
+            <button class="timer-tab" data-minutes="5">Pausa curta</button>
+            <button class="timer-tab" data-minutes="15">Pausa longa</button>
+          </div>
+          <div class="timer-wrap">
+            <svg class="timer-svg" viewBox="0 0 220 220" aria-label="Progresso do cronômetro">
+              <circle class="timer-track" cx="110" cy="110" r="96"></circle>
+              <circle class="timer-progress" id="timer-progress" cx="110" cy="110" r="96"></circle>
+            </svg>
+            <div class="timer-center">
+              <span id="timer-label">HORA DE FOCAR</span>
+              <strong id="timer-display">25:00</strong>
+              <small id="timer-session">Sessão de foco</small>
+            </div>
+          </div>
+          <div class="timer-controls">
+            <button class="timer-reset" id="timer-reset" aria-label="Reiniciar cronômetro">↺</button>
+            <button class="button button-primary timer-start" id="timer-start">▶ Iniciar foco</button>
+            <button class="timer-reset" id="timer-skip" aria-label="Reiniciar sessão">↻</button>
+          </div>
+          <div class="focus-footer"><span class="live-dot"></span> <span id="focus-message">Desative as distrações e comece.</span></div>
+        </section>
+      </div>
+
+      <section class="panel subjects-panel" id="materias">
+        <div class="panel-heading">
+          <div><span class="section-overline">SUA ROTINA</span><h2>Matérias em andamento</h2></div>
+          <button class="text-button" id="add-subject">＋ Nova matéria</button>
+        </div>
+        <div class="subjects-grid" id="subjects-grid"></div>
+      </section>
+
+      <footer class="footer">
+        <span>StudyFlow <span class="footer-dot">●</span> Seu progresso, no seu ritmo.</span>
+        <span>© <span id="year"></span> StudyFlow · Projeto de portfólio</span>
+      </footer>
+    </main>
+  </div>
+
+  <dialog class="modal" id="task-modal">
+    <form id="task-form">
+      <div class="modal-heading"><div><span class="section-overline">ORGANIZAÇÃO</span><h2 id="task-modal-title">Nova tarefa</h2></div><button class="modal-close" type="button" data-close="task-modal" aria-label="Fechar">×</button></div>
+      <label class="form-label">Nome da tarefa<input name="title" required maxlength="100" placeholder="Ex.: Revisar equações"></label>
+      <div class="form-row">
+        <label class="form-label">Matéria<select name="subject" id="task-subject" required></select></label>
+        <label class="form-label">Prioridade<select name="priority"><option value="normal">Normal</option><option value="alta">Alta</option><option value="baixa">Baixa</option></select></label>
+      </div>
+      <label class="form-label">Data de entrega<input name="due" type="date"></label>
+      <div class="modal-actions"><button class="button button-secondary" type="button" data-close="task-modal">Cancelar</button><button class="button button-primary" type="submit">Salvar tarefa</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="subject-modal">
+    <form id="subject-form">
+      <div class="modal-heading"><div><span class="section-overline">SUA ROTINA</span><h2>Nova matéria</h2></div><button class="modal-close" type="button" data-close="subject-modal" aria-label="Fechar">×</button></div>
+      <label class="form-label">Nome da matéria<input name="name" required maxlength="40" placeholder="Ex.: Geografia"></label>
+      <label class="form-label">Cor de identificação<select name="color"><option value="purple">Roxo</option><option value="green">Verde</option><option value="blue">Azul</option><option value="orange">Laranja</option><option value="pink">Rosa</option></select></label>
+      <div class="modal-actions"><button class="button button-secondary" type="button" data-close="subject-modal">Cancelar</button><button class="button button-primary" type="submit">Adicionar matéria</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
